@@ -1,4 +1,10 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          client-id: 1074310569774-nr97v0e8bhj6u3g2e56f5l65vjnqfrbm.apps.googleusercontent.com
   datasource:
     url: jdbc:h2:file:./db/codebreaker
   jpa:
