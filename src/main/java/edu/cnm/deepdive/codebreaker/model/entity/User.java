@@ -21,7 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
-    name = "user_profile, ",
+    name = "user_profile",
     indexes = {
         @Index(columnList = "created")
 }
