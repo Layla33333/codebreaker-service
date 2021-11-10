@@ -93,4 +93,8 @@ public class Guess {
   public void setGame(Game game) {
     this.game = game;
   }
+
+  public boolean isSolution() {
+    return exactMatches == game.getLength();
+  }
 }
