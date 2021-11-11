@@ -10,15 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements Converter<Jwt, UsernamePasswordAuthenticationToken> {
 
-private final UserRepository repository;
+  private final UserRepository repository;
 
-@Autowired
+  @Autowired
   public UserService(UserRepository repository) {
     this.repository = repository;
   }
@@ -32,35 +33,43 @@ private final UserRepository repository;
         source.getTokenValue(), grants);
   }
 
-public User getOrCreate(String oauthKey, String displayName) {
-  return repository
-      .findByOauthKey(oauthKey)
-      .orElseGet(() -> {
-        User user = new User();
-        user.setOauthKey(oauthKey);
-        user.setDisplayName(displayName);
-        return repository.save(user);
-      });
-}
+  public User getOrCreate(String oauthKey, String displayName) {
+    return repository
+        .findByOauthKey(oauthKey)
+        .orElseGet(() -> {
+          User user = new User();
+          user.setOauthKey(oauthKey);
+          user.setDisplayName(displayName);
+          return repository.save(user);
+        });
+  }
 
   public Optional<User> get(UUID id) {
-  return repository.findById(id);
+    return repository.findById(id);
 
   }
+
   public Optional<User> getByExternalKey(UUID key) {
     return repository.findByExternalKey(key);
   }
+
   public Iterable<User> getAll() {
     return repository.getAllByOrderByDisplayNameAsc();
 
   }
 
-  public User save (User user) {
+  public User save(User user) {
     return repository.save(user);
   }
 
-  public void delete (User user) {
-  repository.delete(user);
+  public void delete(User user) {
+    repository.delete(user);
   }
-}
+    public User getCurrentUser() {
+      return (User) SecurityContextHolder
+          .getContext()
+          .getAuthentication()
+          .getPrincipal();
+    }
+  }
 

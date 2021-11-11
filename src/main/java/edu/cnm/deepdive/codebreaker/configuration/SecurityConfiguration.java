@@ -47,7 +47,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
         .authorizeRequests((auth) ->
             auth
                 .anyRequest()
-                .anonymous())
+                .authenticated())
     .oauth2ResourceServer()
                 .jwt()
                 .jwtAuthenticationConverter(converter);
