@@ -71,5 +71,12 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
           .getAuthentication()
           .getPrincipal();
     }
+    public User update(User updatedUser, User user) {
+      if (updatedUser.getDisplayName() != null) {
+        user.setDisplayName(updatedUser.getDisplayName());
+
+      }
+      return save(user);
+    }
   }
 

@@ -50,14 +50,12 @@ public class GameService {
         .ifPresent(gameRepository::delete);
   }
 
-  public Game startGame(String pool, int length, User user) {
-    int[] codePoints = preprocess(pool);
-    String code = generateCode(codePoints, length);
-    Game game = new Game();
+  public Game startGame(Game game, User user) {
+    int[] codePoints = preprocess(game.getPool());
+    String code = generateCode(codePoints, game.getLength());
     game.setUser(user);
     game.setPool(new String(codePoints, 0, codePoints.length));
     game.setText(code);
-    game.setLength(length);
     game.setPoolSize(codePoints.length);
     return gameRepository.save(game);
   }
