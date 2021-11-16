@@ -1,6 +1,9 @@
 package edu.cnm.deepdive.codebreaker.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -28,26 +31,34 @@ public class Guess {
   @Id
   @GeneratedValue
   @Column(name = "guess_id", updatable = false)
+  @JsonIgnore
   private UUID id;
+
   @Column(nullable = false, updatable = false, unique = true)
+  @JsonProperty(value = "id", access = Access.READ_ONLY)
   private UUID externalKey = UUID.randomUUID();
 
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
+  @JsonProperty(access = Access.READ_ONLY)
   private Date created;
 
   @Column(name = "guess_text", nullable = false, updatable = false, length = 20)
   private String text;
 
   @Column(nullable = false, updatable = false)
+  @JsonProperty(access = Access.READ_ONLY)
   private int exactMatches;
+
   @Column(nullable = false, updatable = false)
+  @JsonProperty(access = Access.READ_ONLY)
   private int nearMatches;
 
 
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "game_id", nullable = false, updatable = false)
+  @JsonIgnore
   private Game game;
 
   public UUID getId() {
