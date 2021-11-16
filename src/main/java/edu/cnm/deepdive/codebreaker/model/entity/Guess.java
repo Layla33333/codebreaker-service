@@ -2,8 +2,11 @@ package edu.cnm.deepdive.codebreaker.model.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -26,6 +29,8 @@ import org.hibernate.annotations.CreationTimestamp;
         @Index(columnList = "game_id, created")
     }
 )
+@JsonInclude(Include.NON_NULL)
+@JsonPropertyOrder({"id", "created", "text", "exactMatches", "nearMatches", "solution"})
 public class Guess {
 
   @Id
