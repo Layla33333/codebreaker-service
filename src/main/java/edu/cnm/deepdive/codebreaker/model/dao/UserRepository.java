@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
       + "  SELECT "
       + "    g.user_id, "
       + "    AVG(gu.total_guesses) AS averageGuessCount, "
-      + "    AVG(DATEDIFF(MILLISECOND, gu.last_guess, gu.first_guess)) AS averageTime "
+      + "    AVG(DATEDIFF(MILLISECOND, gu.first_guess, gu.last_guess)) AS averageTime "
       + "  FROM game AS g "
       + "  INNER JOIN ("
       + "    SELECT "
